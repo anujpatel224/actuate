@@ -117,7 +117,10 @@
 
   .topbar nav {
     display: flex;
-    gap: 26px;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     font-family: var(--font-display);
     font-size: 12px;
     letter-spacing: 0.06em;
@@ -126,6 +129,53 @@
 
   .topbar nav a { text-decoration: none; }
   .topbar nav a:hover { color: var(--ink); }
+
+  .btn {
+    appearance: none;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 9px;
+    transition: transform 100ms ease, background 140ms ease, border-color 140ms ease;
+  }
+
+  .btn .icon { width: 15px; height: 15px; }
+
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+
+  .btn-primary:hover { background: color-mix(in srgb, var(--accent) 88%, black 6%); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); color: var(--ink); }
+
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+  }
+
+  .topbar .btn-primary {
+    padding: 8px 14px;
+    font-size: 11.5px;
+  }
 
   /* ---------- hero ---------- */
 
@@ -645,6 +695,13 @@
       <path d="M3 20c2-.3 4-1 5.3-2.6C9.6 15.8 9.6 13.4 11 12s3 .3 2.3 2.2c-.6 1.7.6 2.5 2 1.6C17.3 14.6 19 8 21 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
       <path d="M11.6 11.3v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
     </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24">
+      <path d="M12 3.5v11.3M7.6 10.6l4.4 4.4 4.4-4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M4.5 17v2.3a1.7 1.7 0 0 0 1.7 1.7h11.6a1.7 1.7 0 0 0 1.7-1.7V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24">
+      <path d="M9 7 4 12l5 5M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </symbol>
     <symbol id="icon-keyrow" viewBox="0 0 560 34" preserveAspectRatio="none">
       <g fill="none" stroke="currentColor" stroke-width="1.2">
         <rect x="2" y="4" width="26" height="26" rx="5"></rect>
@@ -674,6 +731,9 @@
       <a href="#packs">Sound packs</a>
       <a href="#how">How it works</a>
       <a href="#privacy">Privacy</a>
+      <a class="btn btn-primary" href="https://github.com/anujpatel224/actuate/releases">
+        <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>Download
+      </a>
     </nav>
   </div>
 
@@ -682,6 +742,14 @@
       <p class="eyebrow">Background app · macOS &amp; Windows</p>
       <h1>Every key has an <em>actuation point</em>.<br>Now it has a sound.</h1>
       <p class="lede">Actuate listens for every keypress on your machine and answers with a real mechanical click — recorded from actual switches, not synthesized. Works in any app, even while it's not focused.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/anujpatel224/actuate/releases">
+          <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>Download for Mac &amp; Windows
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/anujpatel224/actuate">
+          <svg class="icon" aria-hidden="true"><use href="#icon-code"></use></svg>View source
+        </a>
+      </div>
       <div class="hero-meta">
         <span>13 recorded switch packs</span>
         <span>&lt; 20ms hook-to-sound</span>
@@ -764,7 +832,7 @@
 
   <footer>
     <div class="foot-word"><svg class="icon" aria-hidden="true" style="width:14px;height:14px;color:var(--accent);vertical-align:-2px;margin-right:6px"><use href="#icon-mark"></use></svg>Actuate</div>
-    <div class="foot-line">Built for people who miss the click.</div>
+    <div class="foot-line">Built for people who miss the click. <a href="https://github.com/anujpatel224/actuate" style="color:var(--ink-dim)">Source on GitHub →</a></div>
   </footer>
 </div>
 
