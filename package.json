@@ -28,6 +28,7 @@
     "directories": {
       "output": "release"
     },
+    "icon": "build/icon.png",
     "files": [
       "src/**/*",
       "package.json"

@@ -87,6 +87,7 @@ function openSettingsWindow() {
     height: 340,
     resizable: false,
     title: 'Actuate Settings',
+    icon: path.join(__dirname, '..', '..', 'build', 'icon.png'),
     webPreferences: {
       preload: path.join(__dirname, '..', 'preload', 'settings-preload.js'),
       contextIsolation: true,

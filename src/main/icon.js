@@ -68,7 +68,7 @@ function keyboardTrayIcon() {
   // size — feeding the full-res buffer straight into Tray would display it
   // at 64x64 px, far larger than a menu bar/tray icon should be.
   const full = nativeImage.createFromBuffer(buffer, { width: SIZE, height: SIZE });
-  const icon = full.resize({ width: 20, height: 20 });
+  const icon = full.resize({ width: 22, height: 20 });
   icon.setTemplateImage(true);
   return icon;
 }
