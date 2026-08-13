@@ -1,0 +1,53 @@
+{
+  "name": "actuate",
+  "productName": "Actuate",
+  "version": "0.1.0",
+  "description": "Mechanical keyboard sounds for any keyboard.",
+  "private": true,
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.4"
+  },
+  "devDependencies": {
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3"
+  },
+  "allowScripts": {
+    "electron@33.4.11": true,
+    "uiohook-napi@1.5.5": true
+  },
+  "build": {
+    "appId": "dev.anujpatel.actuate",
+    "productName": "Actuate",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "sounds",
+        "to": "sounds"
+      }
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
