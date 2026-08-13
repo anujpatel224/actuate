@@ -64,9 +64,13 @@ function keyboardTrayIcon() {
     }
   }
 
-  const image = nativeImage.createFromBuffer(buffer, { width: SIZE, height: SIZE });
-  image.setTemplateImage(true);
-  return image;
+  // Rendered at 64x64 for clean supersampling, then downsized to actual tray
+  // size — feeding the full-res buffer straight into Tray would display it
+  // at 64x64 px, far larger than a menu bar/tray icon should be.
+  const full = nativeImage.createFromBuffer(buffer, { width: SIZE, height: SIZE });
+  const icon = full.resize({ width: 18, height: 18 });
+  icon.setTemplateImage(true);
+  return icon;
 }
 
 module.exports = { keyboardTrayIcon };
