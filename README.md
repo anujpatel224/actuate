@@ -45,7 +45,3 @@ Output lands in `release/`. This is an **unsigned personal build** — no Apple 
 - Windows: SmartScreen will warn once — "More info" → "Run anyway". AV may also flag it since a global key hook looks like a keylogger; that's expected and mentioned in the plan.
 - Building the Windows installer from a Mac may require Wine (`brew install --cask wine-stable`) for electron-builder's NSIS step — if that's friction, run `npm run dist:win` directly on a Windows machine instead.
 - The tray icon is a placeholder generated in code (`src/main/icon.js`) — swap in real artwork whenever you want.
-
-## Next steps
-
-See `mechanical-keyboard-app-plan.md` for the full phased roadmap. Remaining: stereo panning (optional), mapping your own recordings, real app icon.
