@@ -13,7 +13,7 @@ On first run, macOS will prompt for **Input Monitoring** (and possibly **Accessi
 
 > Note: this can't be run/tested inside a sandboxed coding-agent session — global key hooks and GUI app launches require real OS permissions granted interactively on your machine. Run these commands in your normal Terminal.
 
-If typing produces no sound at all (not even modifier keys register), check **Terminal → Secure Keyboard Entry** in the menu bar and turn it off — macOS blocks all global key hooks system-wide while it's on.
+Running into no sound, or only some keys working? See **Troubleshooting** below.
 
 ## Using the app
 
@@ -41,7 +41,25 @@ npm run dist        # both, for the current platform's target(s)
 ```
 
 Output lands in `release/`. This is an **unsigned personal build** — no Apple notarization or Windows code signing:
-- macOS: Gatekeeper will likely say **"Actuate.app is damaged and can't be opened"** — this is a false positive caused by the missing paid-developer signature plus the browser's quarantine flag, not actual corruption. Fix it in Terminal after moving the app to Applications: `xattr -cr /Applications/Actuate.app`. Then open normally (right-click → Open the first time if it still complains), and grant Input Monitoring/Accessibility when prompted.
+- macOS: see **Troubleshooting** below for the Gatekeeper "damaged" dialog you'll hit on first launch.
 - Windows: SmartScreen will warn once — "More info" → "Run anyway". AV may also flag it since a global key hook looks like a keylogger; that's expected.
 - Building the Windows installer from a Mac may require Wine (`brew install --cask wine-stable`) for electron-builder's NSIS step — if that's friction, run `npm run dist:win` directly on a Windows machine instead.
-- The tray icon is a placeholder generated in code (`src/main/icon.js`) — swap in real artwork whenever you want.
+- The tray icon and app icon are placeholders generated in code (`src/main/icon.js`, `build/icon.png`) — swap in real artwork whenever you want.
+
+## Troubleshooting
+
+**macOS says "Actuate.app is damaged and can't be opened"**
+False positive, not real corruption. Browsers tag downloaded files with a "quarantine" flag, and without a paid Apple Developer signature, Gatekeeper on Apple Silicon refuses to even show the usual "unidentified developer" prompt — it jumps straight to "damaged" instead. Fix, after dragging Actuate to Applications:
+```
+xattr -cr /Applications/Actuate.app
+```
+`xattr` reads/writes a file's extended attributes; `-c` clears all of them (which removes the quarantine flag Gatekeeper checks), and `-r` applies that recursively through the app bundle, since it's really a folder of files rather than one file. Once cleared, open the app normally (right-click → Open the first time if it still complains), then grant Input Monitoring/Accessibility when prompted.
+
+**Only modifier keys (Shift/Ctrl/Cmd) or function keys make sound — letters and numbers don't**
+This is **macOS Secure Keyboard Entry**, not a bug in Actuate. When it's active anywhere on the system, macOS blocks every global key hook from seeing character-producing keys, while still letting non-text keys (modifiers, most function keys) through — producing exactly this pattern.
+- Check **Terminal → Secure Keyboard Entry** in the menu bar (also check iTerm2 if you use it). It stays active as long as that window/app is open, even if it's not the focused app — close it or turn the setting off.
+- Quit password managers (1Password, Bitwarden, etc.) or remote-desktop/screen-sharing tools, which sometimes hold secure input on.
+- If neither works, reboot — secure input can get stuck on if whatever enabled it crashed without releasing it.
+
+**No sound at all, for any key**
+Input Monitoring/Accessibility permission hasn't been granted yet — see "Run it" above, or for the packaged app, System Settings → Privacy & Security → Input Monitoring / Accessibility.
