@@ -41,7 +41,7 @@ npm run dist        # both, for the current platform's target(s)
 ```
 
 Output lands in `release/`. This is an **unsigned personal build** — no Apple notarization or Windows code signing:
-- macOS: first launch needs right-click → Open, then granting Input Monitoring/Accessibility manually.
+- macOS: Gatekeeper will likely say **"Actuate.app is damaged and can't be opened"** — this is a false positive caused by the missing paid-developer signature plus the browser's quarantine flag, not actual corruption. Fix it in Terminal after moving the app to Applications: `xattr -cr /Applications/Actuate.app`. Then open normally (right-click → Open the first time if it still complains), and grant Input Monitoring/Accessibility when prompted.
 - Windows: SmartScreen will warn once — "More info" → "Run anyway". AV may also flag it since a global key hook looks like a keylogger; that's expected.
 - Building the Windows installer from a Mac may require Wine (`brew install --cask wine-stable`) for electron-builder's NSIS step — if that's friction, run `npm run dist:win` directly on a Windows machine instead.
 - The tray icon is a placeholder generated in code (`src/main/icon.js`) — swap in real artwork whenever you want.
