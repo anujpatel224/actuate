@@ -6,6 +6,12 @@
 <title>Actuate</title>
 <meta name="description" content="Actuate gives any keyboard a real mechanical-switch sound on every keypress — a background app for macOS and Windows, recorded from 13 real switches, with under 20ms latency and no keystroke logging.">
 <meta name="theme-color" content="#16151c">
+<script>
+  (function () {
+    var saved = localStorage.getItem('actuate-theme');
+    if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
 
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -195,6 +201,47 @@
   .topbar .btn-primary {
     padding: 8px 14px;
     font-size: 11.5px;
+  }
+
+  .theme-toggle {
+    appearance: none;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    width: 52px;
+    height: 28px;
+    border-radius: 999px;
+    position: relative;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle .icon {
+    position: absolute;
+    top: 50%;
+    width: 13px;
+    height: 13px;
+    transform: translateY(-50%);
+    color: var(--ink-faint);
+  }
+
+  .theme-toggle .icon-sun-mark { left: 7px; }
+  .theme-toggle .icon-moon-mark { right: 7px; }
+
+  .theme-toggle .knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  :root[data-theme="dark"] .theme-toggle .knob { transform: translateX(24px); }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .knob { transform: translateX(24px); }
   }
 
   /* ---------- hero ---------- */
@@ -724,6 +771,13 @@
     <symbol id="icon-code" viewBox="0 0 24 24">
       <path d="M9 7 4 12l5 5M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
     </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle>
+      <path d="M12 2.5v2.6M12 18.9v2.6M21.5 12h-2.6M5.1 12H2.5M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4 5.6 5.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M20 14.2A8.3 8.3 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path>
+    </symbol>
     <symbol id="icon-keyrow" viewBox="0 0 560 34" preserveAspectRatio="none">
       <g fill="none" stroke="currentColor" stroke-width="1.2">
         <rect x="2" y="4" width="26" height="26" rx="5"></rect>
@@ -753,6 +807,11 @@
       <a href="#packs">Sound packs</a>
       <a href="#how">How it works</a>
       <a href="#privacy">Privacy</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="icon icon-sun-mark" aria-hidden="true"><use href="#icon-sun"></use></svg>
+        <svg class="icon icon-moon-mark" aria-hidden="true"><use href="#icon-moon"></use></svg>
+        <span class="knob"></span>
+      </button>
       <a class="btn btn-primary" href="https://github.com/anujpatel224/actuate/releases">
         <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>Download
       </a>
@@ -942,6 +1001,20 @@
     ring.classList.add("ping");
     curveCard.classList.add("drawn");
     setTimeout(() => keycap.classList.remove("pressed"), 140);
+  });
+
+  const themeToggle = document.getElementById("themeToggle");
+  function currentTheme() {
+    const attr = document.documentElement.getAttribute("data-theme");
+    if (attr === "light" || attr === "dark") return attr;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  themeToggle.setAttribute("aria-pressed", String(currentTheme() === "dark"));
+  themeToggle.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("actuate-theme", next);
+    themeToggle.setAttribute("aria-pressed", String(next === "dark"));
   });
 </script>
 </body>
