@@ -47,19 +47,19 @@
     "dmg": {
       "contents": [
         {
-          "x": 130,
+          "x": 160,
           "y": 220,
           "type": "file"
         },
         {
-          "x": 410,
+          "x": 480,
           "y": 220,
           "type": "link",
           "path": "/Applications"
         },
         {
-          "x": 270,
-          "y": 380,
+          "x": 320,
+          "y": 400,
           "type": "file",
           "path": "build/Fix Gatekeeper Warning.command"
         }
