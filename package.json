@@ -44,6 +44,27 @@
       "target": "dmg",
       "category": "public.app-category.utilities"
     },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220,
+          "type": "file"
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 270,
+          "y": 380,
+          "type": "file",
+          "path": "build/Fix Gatekeeper Warning.command"
+        }
+      ]
+    },
     "win": {
       "target": "nsis"
     },

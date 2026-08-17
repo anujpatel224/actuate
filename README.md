@@ -41,7 +41,7 @@ npm run dist        # both, for the current platform's target(s)
 ```
 
 Output lands in `release/`. This is an **unsigned personal build** — no Apple notarization or Windows code signing:
-- macOS: see **Troubleshooting** below for the Gatekeeper "damaged" dialog you'll hit on first launch.
+- macOS: the DMG includes a **"Fix Gatekeeper Warning.command"** script — see **Troubleshooting** below for what it does and the Gatekeeper "damaged" dialog you'll hit on first launch without it.
 - Windows: SmartScreen will warn once — "More info" → "Run anyway". AV may also flag it since a global key hook looks like a keylogger; that's expected.
 - Building the Windows installer from a Mac may require Wine (`brew install --cask wine-stable`) for electron-builder's NSIS step — if that's friction, run `npm run dist:win` directly on a Windows machine instead.
 - The tray icon and app icon are placeholders generated in code (`src/main/icon.js`, `build/icon.png`) — swap in real artwork whenever you want.
@@ -49,7 +49,9 @@ Output lands in `release/`. This is an **unsigned personal build** — no Apple 
 ## Troubleshooting
 
 **macOS says "Actuate.app is damaged and can't be opened"**
-False positive, not real corruption. Browsers tag downloaded files with a "quarantine" flag, and without a paid Apple Developer signature, Gatekeeper on Apple Silicon refuses to even show the usual "unidentified developer" prompt — it jumps straight to "damaged" instead. Fix, after dragging Actuate to Applications:
+False positive, not real corruption. Browsers tag downloaded files with a "quarantine" flag, and without a paid Apple Developer signature, Gatekeeper on Apple Silicon refuses to even show the usual "unidentified developer" prompt — it jumps straight to "damaged" instead. The DMG ships a **"Fix Gatekeeper Warning.command"** script alongside Actuate.app for this: after dragging Actuate to Applications, double-click the script (Terminal will ask you to confirm running it once — that's the normal unsigned-script prompt, click Open) and it clears the flag for you.
+
+If you'd rather do it by hand, or the script itself won't open:
 ```
 xattr -cr /Applications/Actuate.app
 ```
